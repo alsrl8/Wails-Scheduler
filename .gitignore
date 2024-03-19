@@ -1,6 +1,9 @@
-build/bin
-node_modules
-frontend/dist
+# Dependency directories
+node_modules/
+
+# Build artifacts
+build/
+dist/
 
 # Editor directories and files
 .idea/
@@ -8,6 +11,15 @@ frontend/dist
 *.swp
 *.swo
 *~
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+
 
 # Logs
 *.log
@@ -20,3 +32,6 @@ frontend/dist
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Wails specific
+*.md5
