@@ -1,14 +1,12 @@
 import './App.css';
-import FloatingCard from "./components/card/FloatingCard";
-import {useRef, useState} from "react";
+import Container from "./components/container/Container";
 
 
 function App() {
-    const floatingCardRef = useRef(null);
 
     return (
         <div>
-            <FloatingCard ref={floatingCardRef}>Drag Me</FloatingCard>
+            <Container/>
         </div>
     )
 }

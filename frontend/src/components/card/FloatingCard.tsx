@@ -1,17 +1,19 @@
 import React, {forwardRef, useEffect, useImperativeHandle, useRef, useState} from 'react';
-import Draggable from 'react-draggable';
+import Draggable, {DraggableData, DraggableEvent} from 'react-draggable';
 import './FloatingCard.css';
+
 
 interface FloatingCardProps {
     children: React.ReactNode;
+    onDrag: (e: DraggableEvent, data: DraggableData) => void;
 }
 
-const FloatingCard = forwardRef<HTMLDivElement, FloatingCardProps>((props, forwardedRef) => {
-    const {children} = props;
-    const [bounds, setBounds] = useState({left: 0, top: 0, right: 0, bottom: 0});
+const FloatingCard = forwardRef<HTMLDivElement, FloatingCardProps>((props, ref) => {
     const internalRef = useRef<HTMLDivElement>(null);
+    const [isDragging, setIsDragging] = useState(false);
+    const [bounds, setBounds] = useState({left: 0, top: 0, right: 0, bottom: 0});
 
-    useImperativeHandle(forwardedRef, () => internalRef.current!);
+    useImperativeHandle(ref, () => internalRef.current!);
 
     useEffect(() => {
         const updateBounds = () => {
@@ -27,15 +29,20 @@ const FloatingCard = forwardRef<HTMLDivElement, FloatingCardProps>((props, forwa
         return () => window.removeEventListener('resize', updateBounds);
     }, []);
 
-    return (
-        <Draggable nodeRef={internalRef} bounds={bounds}>
-            <div className="draggable-container" ref={internalRef}>
-                <div className="floating-card">
-                    {children}
-                </div>
+    return <Draggable nodeRef={internalRef}
+                      onDrag={props.onDrag}
+                      bounds={bounds}
+                      onStart={() => setIsDragging(true)}
+                      onStop={() => setIsDragging(false)}
+    >
+        <div className="draggable-container" ref={internalRef}>
+            <div className={`floating-card ${isDragging ? 'no-animation' : ''}`}>
+                {props.children}
             </div>
-        </Draggable>
-    );
+        </div>
+    </Draggable>
+
 });
+
 
 export default FloatingCard;
