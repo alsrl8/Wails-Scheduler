@@ -31,7 +31,16 @@ const Container = () => {
     return (
         <div>
             <FloatingCard ref={floatingCardRef} onDrag={onDrag}>
-                Drag Me
+                Drag Me 1
+            </FloatingCard>
+            <FloatingCard ref={floatingCardRef} onDrag={onDrag}>
+                Drag Me 2
+            </FloatingCard>
+            <FloatingCard ref={floatingCardRef} onDrag={onDrag}>
+                Drag Me 3
+            </FloatingCard>
+            <FloatingCard ref={floatingCardRef} onDrag={onDrag}>
+                Drag Me 4
             </FloatingCard>
             <DropPoint ref={dropPointRef} />
         </div>
