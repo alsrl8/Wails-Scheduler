@@ -4,7 +4,7 @@ import FloatingCard from "../card/FloatingCard";
 import DropPoint from "../drop/DropPoint";
 
 const Container = () => {
-    const floatingCardRef = useRef<HTMLDivElement>(null);
+    const floatingCardRefs = useRef<(HTMLDivElement | null)[]>([]);
     const dropPointRef = useRef<HTMLDivElement>(null);
     const [collision, setCollision] = useState(false);
     const [bounds, setBounds] = useState({left: 0, top: 0, right: 0, bottom: 0});
@@ -23,11 +23,11 @@ const Container = () => {
     }, []);
 
 
-    const onDrag = (e: DraggableEvent, data: DraggableData) => {
-        if (!floatingCardRef.current || !dropPointRef.current) return;
+    const onDrag = (e: DraggableEvent, data: DraggableData, index: number) => {
+        if (!floatingCardRefs.current[index] || !dropPointRef.current) return;
 
         const dropPointRect = dropPointRef.current.getBoundingClientRect();
-        const floatingCardRect = floatingCardRef.current.getBoundingClientRect();
+        const floatingCardRect = floatingCardRefs.current[index]!.getBoundingClientRect();
 
         const isColliding = dropPointRect.left < floatingCardRect.right &&
             dropPointRect.right > floatingCardRect.left &&
@@ -36,27 +36,29 @@ const Container = () => {
 
         setCollision(isColliding);
         if (isColliding) {
-            console.log("Collision Detected!");
+            console.log(`Collision Detected with card ${index + 1}!`);
         }
     };
 
     useEffect(() => {
     }, [collision]);
 
+    const getCardRef = (index: number) => {
+        if (!floatingCardRefs.current[index]) {
+            floatingCardRefs.current[index] = null;
+        }
+        return (el: HTMLDivElement) => floatingCardRefs.current[index] = el;
+    };
+
+    const cards = [1, 2, 3, 4].map((card, index) => (
+        <FloatingCard key={index} ref={getCardRef(index)} onDrag={(e, data) => onDrag(e, data, index)} bounds={bounds}>
+            {`Drag Me ${card}`}
+        </FloatingCard>
+    ));
+
     return (
         <div>
-            <FloatingCard ref={floatingCardRef} onDrag={onDrag} bounds={bounds}>
-                Drag Me 1
-            </FloatingCard>
-            <FloatingCard ref={floatingCardRef} onDrag={onDrag} bounds={bounds}>
-                Drag Me 2
-            </FloatingCard>
-            <FloatingCard ref={floatingCardRef} onDrag={onDrag} bounds={bounds}>
-                Drag Me 3
-            </FloatingCard>
-            <FloatingCard ref={floatingCardRef} onDrag={onDrag} bounds={bounds}>
-                Drag Me 4
-            </FloatingCard>
+            {cards}
             <DropPoint ref={dropPointRef}/>
         </div>
     );
