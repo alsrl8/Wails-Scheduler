@@ -58,15 +58,16 @@ const Container = () => {
         return (el: HTMLDivElement) => floatingCardRefs.current[index] = el;
     };
 
-    const floatingCards = cards.map((card, index) => (
-        <FloatingCard key={index} ref={getCardRef(index)} onDrag={(e, data) => onDrag(e, data, index)} bounds={bounds}>
-            <ScheduleComponent schedule={card} />
-        </FloatingCard>
-    ));
-
     return (
         <div>
-            {floatingCards}
+            {cards.map((card, index) => {
+                return <FloatingCard key={index}
+                                     ref={getCardRef(index)}
+                                     onDrag={(e, data) => onDrag(e, data, index)}
+                                     bounds={bounds}>
+                    <ScheduleComponent schedule={card}/>
+                </FloatingCard>
+            })}
             <DropPoint ref={dropPointRef} isColliding={isColliding}/>
         </div>
     );
