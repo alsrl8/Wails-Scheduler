@@ -19,3 +19,7 @@ func NewApp() *App {
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
+
+func (a *App) GetString() string {
+	return "Hello world!"
+}

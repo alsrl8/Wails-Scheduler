@@ -12,14 +12,19 @@ interface FloatingCardProps {
 const FloatingCard = forwardRef<HTMLDivElement, FloatingCardProps>((props, ref) => {
     const internalRef = useRef<HTMLDivElement>(null);
     const [isDragging, setIsDragging] = useState(false);
+    const [position, setPosition] = useState({x: 0, y: 0})
 
     useImperativeHandle(ref, () => internalRef.current!);
 
     return <Draggable nodeRef={internalRef}
-                      onDrag={props.onDrag}
+                      onDrag={(e, data) => {
+                          props.onDrag(e, data);
+                          setPosition({x: data.x, y: data.y})
+                      }}
                       bounds={props.bounds}
                       onStart={() => setIsDragging(true)}
                       onStop={() => setIsDragging(false)}
+                      position={position}
     >
         <div className="draggable-container" ref={internalRef}>
             <div className={`floating-card ${isDragging ? 'no-animation' : ''}`}>

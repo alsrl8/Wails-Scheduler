@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {DraggableData, DraggableEvent} from 'react-draggable';
-import FloatingCard from "../card/FloatingCard";
+import FloatingCard from "../floating_card/FloatingCard";
 import DropPoint from "../drop/DropPoint";
 
 const Container = () => {
@@ -8,6 +8,7 @@ const Container = () => {
     const dropPointRef = useRef<HTMLDivElement>(null);
     const [collision, setCollision] = useState(false);
     const [bounds, setBounds] = useState({left: 0, top: 0, right: 0, bottom: 0});
+    const [cards, setCards] = useState<number[]>([]);
 
     useEffect(() => {
         const updateBounds = () => {
@@ -22,10 +23,17 @@ const Container = () => {
         return () => window.removeEventListener('resize', updateBounds);
     }, []);
 
+    useEffect(() => {
+        loadCards()
+    }, []);
+
+    const loadCards = () => {
+        setCards([1, 2, 3])
+    }
 
     const onDrag = (e: DraggableEvent, data: DraggableData, index: number) => {
         if (!floatingCardRefs.current[index] || !dropPointRef.current) return;
-
+        
         const dropPointRect = dropPointRef.current.getBoundingClientRect();
         const floatingCardRect = floatingCardRefs.current[index]!.getBoundingClientRect();
 
@@ -50,15 +58,15 @@ const Container = () => {
         return (el: HTMLDivElement) => floatingCardRefs.current[index] = el;
     };
 
-    const cards = [1, 2, 3, 4].map((card, index) => (
+    const floatingCards = cards.map((card, index) => (
         <FloatingCard key={index} ref={getCardRef(index)} onDrag={(e, data) => onDrag(e, data, index)} bounds={bounds}>
-            {`Drag Me ${card}`}
+            {`Card ${card}`}
         </FloatingCard>
     ));
 
     return (
         <div>
-            {cards}
+            {floatingCards}
             <DropPoint ref={dropPointRef}/>
         </div>
     );

@@ -19,6 +19,7 @@ body {
 }
 
 .draggable-container {
+    position: fixed;
     width: fit-content;
     height: fit-content;
 }
