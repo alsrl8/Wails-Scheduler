@@ -6,7 +6,7 @@ import DropPoint from "../drop/DropPoint";
 const Container = () => {
     const floatingCardRefs = useRef<(HTMLDivElement | null)[]>([]);
     const dropPointRef = useRef<HTMLDivElement>(null);
-    const [collision, setCollision] = useState(false);
+    const [isColliding, setIsColliding] = useState(false);
     const [bounds, setBounds] = useState({left: 0, top: 0, right: 0, bottom: 0});
     const [cards, setCards] = useState<number[]>([]);
 
@@ -37,19 +37,16 @@ const Container = () => {
         const dropPointRect = dropPointRef.current.getBoundingClientRect();
         const floatingCardRect = floatingCardRefs.current[index]!.getBoundingClientRect();
 
-        const isColliding = dropPointRect.left < floatingCardRect.right &&
+        const _isColliding = dropPointRect.left < floatingCardRect.right &&
             dropPointRect.right > floatingCardRect.left &&
             dropPointRect.top < floatingCardRect.bottom &&
             dropPointRect.bottom > floatingCardRect.top;
 
-        setCollision(isColliding);
-        if (isColliding) {
+        setIsColliding(_isColliding);
+        if (_isColliding) {
             console.log(`Collision Detected with card ${index + 1}!`);
         }
     };
-
-    useEffect(() => {
-    }, [collision]);
 
     const getCardRef = (index: number) => {
         if (!floatingCardRefs.current[index]) {
@@ -67,7 +64,7 @@ const Container = () => {
     return (
         <div>
             {floatingCards}
-            <DropPoint ref={dropPointRef}/>
+            <DropPoint ref={dropPointRef} isColliding={isColliding}/>
         </div>
     );
 };
