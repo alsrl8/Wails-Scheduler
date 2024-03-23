@@ -1,6 +1,7 @@
 package main
 
 import (
+	"changeme/schedule"
 	"context"
 )
 
@@ -22,4 +23,21 @@ func (a *App) startup(ctx context.Context) {
 
 func (a *App) GetString() string {
 	return "Hello world!"
+}
+
+func (a *App) GetSchedules() []schedule.Schedule {
+	return []schedule.Schedule{
+		{
+			Name: "S1",
+			Desc: "D1",
+		},
+		{
+			Name: "S2",
+			Desc: "D2",
+		},
+		{
+			Name: "Something Name",
+			Desc: "Some Desc",
+		},
+	}
 }

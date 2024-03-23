@@ -2,13 +2,16 @@ import React, {useEffect, useRef, useState} from 'react';
 import {DraggableData, DraggableEvent} from 'react-draggable';
 import FloatingCard from "../floating_card/FloatingCard";
 import DropPoint from "../drop/DropPoint";
+import {GetSchedules} from "../../../wailsjs/go/main/App";
+import Schedule from "../../models/Schedule";
+import ScheduleComponent from "../schedule/ScheduleComponent";
 
 const Container = () => {
     const floatingCardRefs = useRef<(HTMLDivElement | null)[]>([]);
     const dropPointRef = useRef<HTMLDivElement>(null);
     const [isColliding, setIsColliding] = useState(false);
     const [bounds, setBounds] = useState({left: 0, top: 0, right: 0, bottom: 0});
-    const [cards, setCards] = useState<number[]>([]);
+    const [cards, setCards] = useState<Schedule[]>([]);
 
     useEffect(() => {
         const updateBounds = () => {
@@ -28,12 +31,12 @@ const Container = () => {
     }, []);
 
     const loadCards = () => {
-        setCards([1, 2, 3])
+        GetSchedules().then(setCards)
     }
 
     const onDrag = (e: DraggableEvent, data: DraggableData, index: number) => {
         if (!floatingCardRefs.current[index] || !dropPointRef.current) return;
-        
+
         const dropPointRect = dropPointRef.current.getBoundingClientRect();
         const floatingCardRect = floatingCardRefs.current[index]!.getBoundingClientRect();
 
@@ -57,7 +60,7 @@ const Container = () => {
 
     const floatingCards = cards.map((card, index) => (
         <FloatingCard key={index} ref={getCardRef(index)} onDrag={(e, data) => onDrag(e, data, index)} bounds={bounds}>
-            {`Card ${card}`}
+            <ScheduleComponent schedule={card} />
         </FloatingCard>
     ));
 

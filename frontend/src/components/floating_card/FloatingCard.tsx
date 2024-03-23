@@ -25,6 +25,7 @@ const FloatingCard = forwardRef<HTMLDivElement, FloatingCardProps>((props, ref) 
                       onStart={() => setIsDragging(true)}
                       onStop={() => setIsDragging(false)}
                       position={position}
+                      defaultPosition={{x: 100, y:100}}
     >
         <div className="draggable-container" ref={internalRef}>
             <div className={`floating-card ${isDragging ? 'no-animation' : ''}`}>
