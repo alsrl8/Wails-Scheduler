@@ -11,6 +11,7 @@ interface FloatingCardProps {
     removeCard: (cardId: string) => void;
     cardId: string;
     setIsColliding: (value: boolean) => void;
+    cardPositions: Map<string, { x: number, y: number }>;
 }
 
 const FloatingCard = forwardRef<HTMLDivElement, FloatingCardProps>((props, ref) => {
@@ -26,10 +27,19 @@ const FloatingCard = forwardRef<HTMLDivElement, FloatingCardProps>((props, ref) 
     }
 
     const handleDragStop = () => {
+        props.cardPositions.set(props.cardId, {x: position.x, y: position.y})
+        console.log(props.cardPositions.get(props.cardId));
         setIsDragging(false);
         if (!props.isColliding) return;
         props.removeCard(props.cardId);
         props.setIsColliding(false);
+    }
+
+    const getStoredPosition = () => {
+        console.log(props.cardId, props.cardPositions.get(props.cardId));
+
+        if (!props.cardPositions.has(props.cardId)) return {x: 0, y: 0}
+        return props.cardPositions.get(props.cardId);
     }
 
     return <Draggable disabled={!visible}
@@ -41,8 +51,7 @@ const FloatingCard = forwardRef<HTMLDivElement, FloatingCardProps>((props, ref) 
                       bounds={props.bounds}
                       onStart={handleDragStart}
                       onStop={handleDragStop}
-                      position={position}
-                      defaultPosition={{x: 100, y: 100}}
+                      position={getStoredPosition()}
     >
         <div className="draggable-container" ref={internalRef}>
             <div className={`floating-card ${isDragging ? 'no-animation' : ''}`}>
