@@ -5,6 +5,7 @@ import DropPoint from "../drop/DropPoint";
 import {GetSchedules} from "../../../wailsjs/go/main/App";
 import Schedule from "../../models/Schedule";
 import ScheduleComponent from "../schedule/ScheduleComponent";
+import AddButton from "../add_button/AddButton";
 
 const Container = () => {
     const floatingCardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -90,6 +91,7 @@ const Container = () => {
                 </FloatingCard>
             })}
             <DropPoint ref={dropPointRef} isColliding={isColliding}/>
+            <AddButton />
         </div>
     );
 };

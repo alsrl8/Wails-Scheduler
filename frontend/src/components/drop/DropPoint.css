@@ -7,8 +7,8 @@
     width: fit-content;
     height: fit-content;
     position: fixed;
-    right: 0;
-    bottom:0;
+    right: 2vw;
+    bottom: 2vw;
 }
 
 .trashcan {

@@ -1,0 +1,31 @@
+.add-button-container {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: fit-content;
+    height: fit-content;
+    transition: opacity 0.3s ease;
+}
+
+.add-button,
+.add-button-hover {
+    position: fixed;
+    right: 1vw;
+    top: 1vw;
+    width: 6vw;
+    height: auto;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.add-button-hover {
+    opacity: 0;
+    transform: scale(1.02);
+}
+
+.add-button-container:hover .add-button-hover {
+    opacity: 1;
+}
+
+.add-button-container:hover .add-button {
+    opacity: 1;
+}
