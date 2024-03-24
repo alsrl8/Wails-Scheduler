@@ -6,9 +6,20 @@
     user-select: none;
     width: fit-content;
     height: fit-content;
+    position: fixed;
+    right: 0;
+    bottom:0;
+}
 
+.trashcan {
+    position: relative;
+    width: 8vw;
+    height: auto;
 
     &.collision {
-      color: red;
+        width: 8vw;
+        height: auto;
+        transform: scale(1.05);
+        filter: hue-rotate(10deg) brightness(110%);
     }
 }
