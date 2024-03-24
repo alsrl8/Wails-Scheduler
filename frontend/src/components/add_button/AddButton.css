@@ -1,4 +1,10 @@
 .add-button-container {
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
     position: absolute;
     right: 0;
     top: 0;
