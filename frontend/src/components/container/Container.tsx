@@ -11,7 +11,7 @@ const Container = () => {
     const dropPointRef = useRef<HTMLDivElement>(null);
     const [isColliding, setIsColliding] = useState(false);
     const [bounds, setBounds] = useState({left: 0, top: 0, right: 0, bottom: 0});
-    const [cards, setCards] = useState<Schedule[]>([]);
+    const [cards, setCards] = useState<Schedule []>([]);
 
     useEffect(() => {
         const updateBounds = () => {
@@ -51,6 +51,10 @@ const Container = () => {
         }
     };
 
+    const removeCard = (cardId: string) => {
+        setCards(cards.filter(card => card.id !== cardId));
+    }
+
     const getCardRef = (index: number) => {
         if (!floatingCardRefs.current[index]) {
             floatingCardRefs.current[index] = null;
@@ -64,7 +68,12 @@ const Container = () => {
                 return <FloatingCard key={index}
                                      ref={getCardRef(index)}
                                      onDrag={(e, data) => onDrag(e, data, index)}
-                                     bounds={bounds}>
+                                     bounds={bounds}
+                                     isColliding={isColliding}
+                                     removeCard={removeCard}
+                                     cardId={card.id}
+                                     setIsColliding={setIsColliding}
+                >
                     <ScheduleComponent schedule={card}/>
                 </FloatingCard>
             })}

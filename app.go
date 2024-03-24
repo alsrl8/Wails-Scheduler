@@ -28,14 +28,17 @@ func (a *App) GetString() string {
 func (a *App) GetSchedules() []schedule.Schedule {
 	return []schedule.Schedule{
 		{
+			Id:   "id1",
 			Name: "S1",
 			Desc: "D1",
 		},
 		{
+			Id:   "id2",
 			Name: "S2",
 			Desc: "D2",
 		},
 		{
+			Id:   "id3",
 			Name: "Something Name",
 			Desc: "Some Desc",
 		},

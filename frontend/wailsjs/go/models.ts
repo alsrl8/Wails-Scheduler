@@ -1,6 +1,7 @@
 export namespace schedule {
 	
 	export class Schedule {
+	    id: string;
 	    name: string;
 	    desc: string;
 	
@@ -10,6 +11,7 @@ export namespace schedule {
 	
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.id = source["id"];
 	        this.name = source["name"];
 	        this.desc = source["desc"];
 	    }

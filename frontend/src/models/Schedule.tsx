@@ -1,6 +1,5 @@
-import React from "react";
-
 interface Schedule {
+    id: string;
     name: string;
     desc: string;
 }
