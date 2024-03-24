@@ -1,6 +1,7 @@
 import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import Draggable, {DraggableData, DraggableEvent} from 'react-draggable';
 import './FloatingCard.css';
+import {DeleteSchedule} from "../../../wailsjs/go/main/App";
 
 
 interface FloatingCardProps {
@@ -28,16 +29,15 @@ const FloatingCard = forwardRef<HTMLDivElement, FloatingCardProps>((props, ref) 
 
     const handleDragStop = () => {
         props.cardPositions.set(props.cardId, {x: position.x, y: position.y})
-        console.log(props.cardPositions.get(props.cardId));
         setIsDragging(false);
         if (!props.isColliding) return;
-        props.removeCard(props.cardId);
-        props.setIsColliding(false);
+        DeleteSchedule(props.cardId).then(() => {
+            props.removeCard(props.cardId);
+            props.setIsColliding(false);
+        });
     }
 
     const getStoredPosition = () => {
-        console.log(props.cardId, props.cardPositions.get(props.cardId));
-
         if (!props.cardPositions.has(props.cardId)) return {x: 0, y: 0}
         return props.cardPositions.get(props.cardId);
     }

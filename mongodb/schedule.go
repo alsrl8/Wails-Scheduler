@@ -60,3 +60,17 @@ func GetSchedules(client *mongo.Client) ([]*Schedule, error) {
 	}
 	return schedules, nil
 }
+
+func DeleteSchedule(client *mongo.Client, clientId string) {
+	collection := client.Database("schedule").Collection("data")
+	objId, err := primitive.ObjectIDFromHex(clientId)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	_, err = collection.DeleteOne(context.TODO(), bson.M{"_id": objId})
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+}

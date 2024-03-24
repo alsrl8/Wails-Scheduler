@@ -38,3 +38,7 @@ func (a *App) GetSchedules() []model.Schedule {
 func (a *App) AddSchedule(schedule model.Schedule) {
 	app.AddSchedule(schedule)
 }
+
+func (a *App) DeleteSchedule(scheduleId string) {
+	app.DeleteSchedule(scheduleId)
+}

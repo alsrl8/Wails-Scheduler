@@ -36,3 +36,8 @@ func AddSchedule(schedule model.Schedule) {
 
 	mongodb.PostSchedule(client, &postSchedule)
 }
+
+func DeleteSchedule(scheduleId string) {
+	client := mongodb.GetClient()
+	mongodb.DeleteSchedule(client, scheduleId)
+}

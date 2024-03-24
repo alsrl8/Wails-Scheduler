@@ -6,6 +6,10 @@ export function AddSchedule(arg1) {
   return window['go']['main']['App']['AddSchedule'](arg1);
 }
 
+export function DeleteSchedule(arg1) {
+  return window['go']['main']['App']['DeleteSchedule'](arg1);
+}
+
 export function GetSchedules() {
   return window['go']['main']['App']['GetSchedules']();
 }
