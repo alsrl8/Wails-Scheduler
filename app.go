@@ -1,7 +1,8 @@
 package main
 
 import (
-	"changeme/schedule"
+	"changeme/app"
+	"changeme/model"
 	"context"
 )
 
@@ -21,26 +22,15 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
-func (a *App) GetString() string {
-	return "Hello world!"
-}
+func (a *App) GetSchedules() []model.Schedule {
+	schedulePointers := app.GetSchedules()
 
-func (a *App) GetSchedules() []schedule.Schedule {
-	return []schedule.Schedule{
-		{
-			Id:   "id1",
-			Name: "S1",
-			Desc: "D1",
-		},
-		{
-			Id:   "id2",
-			Name: "S2",
-			Desc: "D2",
-		},
-		{
-			Id:   "id3",
-			Name: "Something Name",
-			Desc: "Some Desc",
-		},
+	schedules := make([]model.Schedule, 0, len(schedulePointers))
+	for _, schedulePtr := range schedulePointers {
+		if schedulePtr == nil {
+			continue
+		}
+		schedules = append(schedules, *schedulePtr)
 	}
+	return schedules
 }

@@ -5,7 +5,3 @@
 export function GetSchedules() {
   return window['go']['main']['App']['GetSchedules']();
 }
-
-export function GetString() {
-  return window['go']['main']['App']['GetString']();
-}

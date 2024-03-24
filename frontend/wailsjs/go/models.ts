@@ -1,4 +1,4 @@
-export namespace schedule {
+export namespace model {
 	
 	export class Schedule {
 	    id: string;
