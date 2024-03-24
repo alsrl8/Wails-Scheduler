@@ -7,6 +7,9 @@ function App() {
     return (
         <div>
             <Container/>
+            <div>
+                Press A+A to add new schedule.
+            </div>
         </div>
     )
 }
