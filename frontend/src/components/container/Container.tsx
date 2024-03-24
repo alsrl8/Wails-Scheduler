@@ -91,7 +91,7 @@ const Container = () => {
                 </FloatingCard>
             })}
             <DropPoint ref={dropPointRef} isColliding={isColliding}/>
-            <AddButton />
+            <AddButton loadCards={loadCards}/>
         </div>
     );
 };

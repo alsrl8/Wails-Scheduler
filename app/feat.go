@@ -4,6 +4,7 @@ import (
 	"changeme/model"
 	"changeme/mongodb"
 	"fmt"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func GetSchedules() []*model.Schedule {
@@ -23,4 +24,15 @@ func GetSchedules() []*model.Schedule {
 		fmt.Printf("%v\n", s)
 	}
 	return ret
+}
+
+func AddSchedule(schedule model.Schedule) {
+	client := mongodb.GetClient()
+
+	var postSchedule mongodb.Schedule
+	postSchedule.ID = primitive.NewObjectID()
+	postSchedule.Name = schedule.Name
+	postSchedule.Desc = schedule.Desc
+
+	mongodb.PostSchedule(client, &postSchedule)
 }

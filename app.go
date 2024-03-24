@@ -34,3 +34,7 @@ func (a *App) GetSchedules() []model.Schedule {
 	}
 	return schedules
 }
+
+func (a *App) AddSchedule(schedule model.Schedule) {
+	app.AddSchedule(schedule)
+}
