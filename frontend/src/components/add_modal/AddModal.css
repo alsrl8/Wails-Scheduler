@@ -1,0 +1,6 @@
+.name-input-box {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    width: 92%;
+}

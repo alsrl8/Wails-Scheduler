@@ -1,7 +1,9 @@
-import React, {ChangeEvent, LegacyRef, useEffect, useRef, useState} from 'react';
+import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
 import {Button, Input, InputRef, Modal} from "antd";
 import {AddSchedule} from "../../../wailsjs/go/main/App";
 import Schedule from "../../models/Schedule";
+import MarkdownEditor from "../markdown_editor/MarkdownEditor";
+import './AddModal.css'
 
 interface AddModalProps {
     isModalOpen: boolean,
@@ -26,33 +28,19 @@ const AddModal = (props: AddModalProps) => {
     }, [props.isModalOpen]);
 
     const handleOk = () => {
-        props.setIsModalOpen(false);
         const userInputSchedule: Schedule = {id: '', name: nameInputValue, desc: descInputValue};
         AddSchedule(userInputSchedule).then(() => {
             setNameInputValue('');
             setDescInputValue('');
             props.loadCards();
         });
+        props.setIsModalOpen(false);
     };
 
     const handleCancel = () => {
         props.setIsModalOpen(false);
         setNameInputValue('');
         setDescInputValue('');
-    };
-
-    const handleNameInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setNameInputValue(e.target.value);
-    }
-
-    const handleDescInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setDescInputValue(e.target.value);
-    }
-
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            handleOk();
-        }
     };
 
     return <>
@@ -68,18 +56,13 @@ const AddModal = (props: AddModalProps) => {
             onCancel={handleCancel}
             closable={false}
         >
-            <Input
-                ref={inputRef}
-                value={nameInputValue}
-                onChange={handleNameInputChange}
-                onKeyPress={handleKeyDown}
-                placeholder={'Input Name'}
-            />
-            <Input
-                value={descInputValue}
-                onChange={handleDescInputChange}
-                onKeyPress={handleKeyDown}
-                placeholder={'Input Desc'}
+            <MarkdownEditor
+                inputRef={inputRef}
+                header={nameInputValue}
+                setHeader={setNameInputValue}
+                content={descInputValue}
+                setContent={setDescInputValue}
+                handleOk={handleOk}
             />
         </Modal>
     </>

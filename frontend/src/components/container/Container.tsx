@@ -7,6 +7,7 @@ import Schedule from "../../models/Schedule";
 import ScheduleComponent from "../schedule/ScheduleComponent";
 import AddButton from "../add_button/AddButton";
 
+
 const Container = () => {
     const floatingCardRefs = useRef<(HTMLDivElement | null)[]>([]);
     const dropPointRef = useRef<HTMLDivElement>(null);
