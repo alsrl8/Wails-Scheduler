@@ -5,7 +5,6 @@
     padding: 15px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -31,8 +30,9 @@
     background-color: #555555;
 }
 
-.card:hover .cardTitle, .card:hover .cardDesc {
+.card:hover .cardTitle, .card:hover .cardDesc, .card:hover .divisionLine {
     color: #007BFF;
+    border-color: #007BFF;
 }
 
 .cardTitle {
@@ -45,11 +45,12 @@
     margin-top: 0;
 }
 
-
 .cardDesc {
     color: #ffffff;
     font-size: 12px;
     text-align: left;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .cardTitle, .cardDesc {
