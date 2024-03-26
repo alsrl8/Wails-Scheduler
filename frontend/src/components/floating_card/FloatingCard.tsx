@@ -2,6 +2,8 @@ import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import Draggable, {DraggableData, DraggableEvent} from 'react-draggable';
 import './FloatingCard.css';
 import {DeleteSchedule} from "../../../wailsjs/go/main/App";
+import ModifyModal from "../modify_modal/ModifyModal";
+import {ScheduleComponentProps} from "../schedule/ScheduleComponent";
 
 
 interface FloatingCardProps {
@@ -20,6 +22,7 @@ const FloatingCard = forwardRef<HTMLDivElement, FloatingCardProps>((props, ref) 
     const [isDragging, setIsDragging] = useState(false);
     const [position, setPosition] = useState({x: 0, y: 0})
     const [visible, setVisible] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useImperativeHandle(ref, () => internalRef.current!);
 
@@ -37,28 +40,35 @@ const FloatingCard = forwardRef<HTMLDivElement, FloatingCardProps>((props, ref) 
         });
     }
 
+    const handleDoubleClick = () => {
+        setIsModalOpen(true);
+    }
+
     const getStoredPosition = () => {
         if (!props.cardPositions.has(props.cardId)) return {x: 0, y: 0}
         return props.cardPositions.get(props.cardId);
     }
 
-    return <Draggable disabled={!visible}
-                      nodeRef={internalRef}
-                      onDrag={(e, data) => {
-                          props.onDrag(e, data);
-                          setPosition({x: data.x, y: data.y})
-                      }}
-                      bounds={props.bounds}
-                      onStart={handleDragStart}
-                      onStop={handleDragStop}
-                      position={getStoredPosition()}
-    >
-        <div className="draggable-container" ref={internalRef}>
-            <div className={`floating-card ${isDragging ? 'no-animation' : ''}`}>
-                {props.children}
-            </div>
-        </div>
-    </Draggable>
+    return (
+        <>
+            <Draggable disabled={!visible}
+                       nodeRef={internalRef}
+                       onDrag={(e, data) => {
+                           props.onDrag(e, data);
+                           setPosition({x: data.x, y: data.y})
+                       }}
+                       bounds={props.bounds}
+                       onStart={handleDragStart}
+                       onStop={handleDragStop}
+                       position={getStoredPosition()}
+            >
+                <div className="draggable-container" ref={internalRef} onDoubleClick={handleDoubleClick}>
+                    <div className={`floating-card ${isDragging ? 'no-animation' : ''}`}>
+                        {props.children}
+                    </div>
+                </div>
+            </Draggable>
+        </>);
 
 });
 

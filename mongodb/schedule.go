@@ -39,6 +39,20 @@ func PostSchedule(client *mongo.Client, s *Schedule) {
 	log.Printf("Post result: %v\n", result)
 }
 
+func UpdateSchedule(client *mongo.Client, s *Schedule) {
+	collection := client.Database("schedule").Collection("data")
+	update := bson.M{
+		"$set": bson.M{
+			"name": s.Name,
+			"desc": s.Desc,
+		},
+	}
+	_, err := collection.UpdateByID(context.TODO(), s.ID, update)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
 func GetSchedules(client *mongo.Client) ([]*Schedule, error) {
 	collection := client.Database("schedule").Collection("data")
 	cur, err := collection.Find(context.TODO(), bson.D{{}}, options.Find())

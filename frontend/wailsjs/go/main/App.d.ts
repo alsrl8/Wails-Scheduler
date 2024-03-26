@@ -7,3 +7,5 @@ export function AddSchedule(arg1:model.Schedule):Promise<void>;
 export function DeleteSchedule(arg1:string):Promise<void>;
 
 export function GetSchedules():Promise<Array<model.Schedule>>;
+
+export function ModifySchedule(arg1:model.Schedule):Promise<void>;

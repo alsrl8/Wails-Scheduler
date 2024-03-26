@@ -3,11 +3,11 @@ import Schedule from '../../models/Schedule';
 import './ScheduleComponent.css'
 import MarkdownViewer from "../markdown_viewer/MarkdownViewer";
 
-interface Props {
+export interface ScheduleComponentProps {
     schedule: Schedule;
 }
 
-const ScheduleComponent: React.FC<Props> = ({schedule}) => {
+const ScheduleComponent = (props: ScheduleComponentProps) => {
     const [isActive, setIsActive] = useState(false);
     const cardStyles = `card ${isActive ? 'cardActive' : ''}`;
 
@@ -33,9 +33,9 @@ const ScheduleComponent: React.FC<Props> = ({schedule}) => {
 
     return (
         <div className={cardStyles} onMouseDown={() => setIsActive(true)} onMouseUp={() => setIsActive(false)}>
-            <MarkdownViewer className="cardTitle" markdownText={"# " + schedule.name}/>
-            <hr className="divisionLine" />
-            <MarkdownViewer className="cardDesc" markdownText={schedule.desc}/>
+            <MarkdownViewer className="cardTitle" markdownText={"# " + props.schedule.name}/>
+            <hr className="divisionLine"/>
+            <MarkdownViewer className="cardDesc" markdownText={props.schedule.desc}/>
         </div>
     );
 };

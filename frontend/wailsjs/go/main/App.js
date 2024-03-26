@@ -13,3 +13,7 @@ export function DeleteSchedule(arg1) {
 export function GetSchedules() {
   return window['go']['main']['App']['GetSchedules']();
 }
+
+export function ModifySchedule(arg1) {
+  return window['go']['main']['App']['ModifySchedule'](arg1);
+}
