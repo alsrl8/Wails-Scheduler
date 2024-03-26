@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Schedule from '../../models/Schedule';
 import './ScheduleComponent.css'
+import MarkdownViewer from "../markdown_viewer/MarkdownViewer";
 
 interface Props {
     schedule: Schedule;
@@ -17,7 +18,7 @@ const ScheduleComponent: React.FC<Props> = ({schedule}) => {
             }
         };
 
-        const handleMouseUp =(event: MouseEvent) => {
+        const handleMouseUp = (event: MouseEvent) => {
             setIsActive(false);
         }
 
@@ -32,8 +33,9 @@ const ScheduleComponent: React.FC<Props> = ({schedule}) => {
 
     return (
         <div className={cardStyles} onMouseDown={() => setIsActive(true)} onMouseUp={() => setIsActive(false)}>
-            <h1 className="cardTitle">{schedule.name}</h1>
-            <p className="cardDesc">{schedule.desc}</p>
+            <MarkdownViewer className="cardTitle" markdownText={"# " + schedule.name}/>
+            <hr className="divisionLine" />
+            <MarkdownViewer className="cardDesc" markdownText={schedule.desc}/>
         </div>
     );
 };

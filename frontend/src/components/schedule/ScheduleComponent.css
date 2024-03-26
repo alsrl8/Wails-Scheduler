@@ -1,15 +1,15 @@
 .card {
-    background-color: #fff;
+    background-color: #333333;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 16px 0;
-    padding: 20px;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2), 0 6px 20px rgba(0, 123, 255, 0.1);
+    padding: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 
 .card {
     cursor: pointer;
@@ -18,17 +18,17 @@
 }
 
 .cardActive {
-    border: 2px solid #007BFF;
+    border: 3px solid #007BFF;
     box-shadow: 0 12px 16px rgba(0, 123, 255, 0.2);
 }
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 12px 16px rgba(0, 0, 0, 0.5);
 }
 
 .card:hover {
-    background-image: linear-gradient(to bottom right, #ffffff, #f1f1f1);
+    background-color: #555555;
 }
 
 .card:hover .cardTitle, .card:hover .cardDesc {
@@ -36,15 +36,20 @@
 }
 
 .cardTitle {
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 8px;
+    color: #ffffff;
+    font-size: 20px;
 }
 
+.divisionLine {
+    width: 95%;
+    margin-top: 0;
+}
+
+
 .cardDesc {
-    color: #666;
+    color: #ffffff;
     font-size: 16px;
-    text-align: center;
+    text-align: left;
 }
 
 .cardTitle, .cardDesc {
