@@ -2,7 +2,6 @@ import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import Draggable, {DraggableData, DraggableEvent} from 'react-draggable';
 import './FloatingCard.css';
 import {DeleteSchedule} from "../../../wailsjs/go/main/App";
-import ModifyModal from "../modify_modal/ModifyModal";
 
 
 interface FloatingCardProps {
@@ -21,7 +20,6 @@ const FloatingCard = forwardRef<HTMLDivElement, FloatingCardProps>((props, ref) 
     const [isDragging, setIsDragging] = useState(false);
     const [position, setPosition] = useState({x: 0, y: 0})
     const [visible, setVisible] = useState(true);
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useImperativeHandle(ref, () => internalRef.current!);
 
@@ -57,15 +55,12 @@ const FloatingCard = forwardRef<HTMLDivElement, FloatingCardProps>((props, ref) 
                        onStop={handleDragStop}
                        position={getStoredPosition()}
             >
-                <div className="draggable-container" ref={internalRef} onDoubleClick={() => {
-                    setIsModalOpen(true);
-                }}>
+                <div className="draggable-container" ref={internalRef}>
                     <div className={`floating-card ${isDragging ? 'no-animation' : ''}`}>
                         {props.children}
                     </div>
                 </div>
             </Draggable>
-            <ModifyModal isOpen={isModalOpen} />222
         </>);
 
 });

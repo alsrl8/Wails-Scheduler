@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Schedule from '../../models/Schedule';
 import './ScheduleComponent.css'
 import MarkdownViewer from "../markdown_viewer/MarkdownViewer";
+import ModifyModal from "../modify_modal/ModifyModal";
 
 export interface ScheduleComponentProps {
     schedule: Schedule;
@@ -10,6 +11,7 @@ export interface ScheduleComponentProps {
 const ScheduleComponent = (props: ScheduleComponentProps) => {
     const [isActive, setIsActive] = useState(false);
     const cardStyles = `card ${isActive ? 'cardActive' : ''}`;
+    const [isOpenModal, setIsOpenModal] = useState(false);
 
     useEffect(() => {
         const handleMouseLeaveWindow = (event: MouseEvent) => {
@@ -31,12 +33,29 @@ const ScheduleComponent = (props: ScheduleComponentProps) => {
         };
     }, []);
 
-    return (
-        <div className={cardStyles} onMouseDown={() => setIsActive(true)} onMouseUp={() => setIsActive(false)}>
-            <MarkdownViewer className="cardTitle" markdownText={"# " + props.schedule.name}/>
-            <hr className="divisionLine"/>
-            <MarkdownViewer className="cardDesc" markdownText={props.schedule.desc}/>
-        </div>
+    const handleDoubleClick = () => {
+        setIsOpenModal(true);
+    }
+
+    return (<>
+            <div
+                className={cardStyles}
+                onMouseDown={() => setIsActive(true)}
+                onMouseUp={() => setIsActive(false)}
+                onDoubleClick={handleDoubleClick}
+            >
+                <MarkdownViewer className="cardTitle" markdownText={"# " + props.schedule.name}/>
+                <hr className="divisionLine"/>
+                <MarkdownViewer className="cardDesc" markdownText={props.schedule.desc}/>
+                <ModifyModal
+                    isOpen={isOpenModal}
+                    setIsOpen={setIsOpenModal}
+                    scheduleId={props.schedule.id}
+                    name={props.schedule.name}
+                    desc={props.schedule.desc}
+                />
+            </div>
+        </>
     );
 };
 
