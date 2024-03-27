@@ -7,20 +7,24 @@ html {
 body {
     margin: 0;
     color: white;
-    font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    font-family: "Ba궁뎅이복숭아", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
 }
 
 @font-face {
-    font-family: "Nunito";
+    font-family: "Ba궁뎅이복숭아";
     font-style: normal;
     font-weight: 400;
     src: local(""),
-    url("assets/fonts/nunito-v16-latin-regular.woff2") format("woff2");
+    url("assets/fonts/Ba궁뎅이복숭아.ttf");
 }
 
 #app {
     height: 100vh;
     text-align: center;
+}
+
+.ant-modal, .ant-modal-header, .ant-modal-body, .ant-modal-footer, .ant-input {
+    font-family: 'Ba궁뎅이복숭아', sans-serif !important;
 }

@@ -3,7 +3,6 @@ import Draggable, {DraggableData, DraggableEvent} from 'react-draggable';
 import './FloatingCard.css';
 import {DeleteSchedule} from "../../../wailsjs/go/main/App";
 import ModifyModal from "../modify_modal/ModifyModal";
-import {ScheduleComponentProps} from "../schedule/ScheduleComponent";
 
 
 interface FloatingCardProps {
@@ -40,10 +39,6 @@ const FloatingCard = forwardRef<HTMLDivElement, FloatingCardProps>((props, ref) 
         });
     }
 
-    const handleDoubleClick = () => {
-        setIsModalOpen(true);
-    }
-
     const getStoredPosition = () => {
         if (!props.cardPositions.has(props.cardId)) return {x: 0, y: 0}
         return props.cardPositions.get(props.cardId);
@@ -62,12 +57,15 @@ const FloatingCard = forwardRef<HTMLDivElement, FloatingCardProps>((props, ref) 
                        onStop={handleDragStop}
                        position={getStoredPosition()}
             >
-                <div className="draggable-container" ref={internalRef} onDoubleClick={handleDoubleClick}>
+                <div className="draggable-container" ref={internalRef} onDoubleClick={() => {
+                    setIsModalOpen(true);
+                }}>
                     <div className={`floating-card ${isDragging ? 'no-animation' : ''}`}>
                         {props.children}
                     </div>
                 </div>
             </Draggable>
+            <ModifyModal isOpen={isModalOpen} />222
         </>);
 
 });
