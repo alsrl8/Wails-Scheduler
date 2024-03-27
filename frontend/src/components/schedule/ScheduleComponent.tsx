@@ -6,6 +6,9 @@ import ModifyModal from "../modify_modal/ModifyModal";
 
 export interface ScheduleComponentProps {
     schedule: Schedule;
+    isCardActive: boolean;
+    setIsCardActive: (value: boolean) => void;
+    loadCards: () => void;
 }
 
 const ScheduleComponent = (props: ScheduleComponentProps) => {
@@ -35,13 +38,23 @@ const ScheduleComponent = (props: ScheduleComponentProps) => {
 
     const handleDoubleClick = () => {
         setIsOpenModal(true);
+        props.setIsCardActive(false);
+    }
+
+    const handleMouseDown = () => {
+        if (!props.isCardActive) return;
+        setIsActive(true);
+    }
+
+    const handleMouseUp = () => {
+        setIsActive(false);
     }
 
     return (<>
             <div
                 className={cardStyles}
-                onMouseDown={() => setIsActive(true)}
-                onMouseUp={() => setIsActive(false)}
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
                 onDoubleClick={handleDoubleClick}
             >
                 <MarkdownViewer className="cardTitle" markdownText={"# " + props.schedule.name}/>
@@ -53,6 +66,8 @@ const ScheduleComponent = (props: ScheduleComponentProps) => {
                     scheduleId={props.schedule.id}
                     name={props.schedule.name}
                     desc={props.schedule.desc}
+                    onClose={() => props.setIsCardActive(true)}
+                    loadCards={props.loadCards}
                 />
             </div>
         </>

@@ -16,6 +16,7 @@ const Container = () => {
     const [cards, setCards] = useState<Schedule []>([]);
     const [cardOrders, setCardOrders] = useState<string[]>([]);
     const [cardPositions, setCardPositions] = useState(new Map<string, { x: number, y: number }>());
+    const [isCardActive, setIsCardActive] = useState(true);
 
     useEffect(() => {
         const updateBounds = () => {
@@ -78,18 +79,26 @@ const Container = () => {
                 if (!card) {
                     return <div key={`placeholder-${index}`} style={{visibility: 'hidden'}}>Placeholder</div>;
                 }
-                return <FloatingCard key={index}
-                                     ref={getCardRef(index)}
-                                     onDrag={(e, data) => onDrag(e, data, index)}
-                                     bounds={bounds}
-                                     isColliding={isColliding}
-                                     removeCard={removeCard}
-                                     cardId={card.id}
-                                     setIsColliding={setIsColliding}
-                                     cardPositions={cardPositions}
-                >
-                    <ScheduleComponent schedule={card}/>
-                </FloatingCard>
+                return (
+                    <FloatingCard
+                        draggable={isCardActive}
+                        key={index}
+                        ref={getCardRef(index)}
+                        onDrag={(e, data) => onDrag(e, data, index)}
+                        bounds={bounds}
+                        isColliding={isColliding}
+                        removeCard={removeCard}
+                        cardId={card.id}
+                        setIsColliding={setIsColliding}
+                        cardPositions={cardPositions}
+                    >
+                        <ScheduleComponent
+                            schedule={card}
+                            isCardActive={isCardActive}
+                            setIsCardActive={setIsCardActive}
+                            loadCards={loadCards}
+                        />
+                    </FloatingCard>)
             })}
             <DropPoint ref={dropPointRef} isColliding={isColliding}/>
             <AddButton loadCards={loadCards}/>

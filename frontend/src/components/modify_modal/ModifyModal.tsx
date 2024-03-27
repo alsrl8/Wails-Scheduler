@@ -1,6 +1,8 @@
 import React, {useEffect, useRef, useState} from "react";
 import {Button, InputRef, Modal} from "antd";
 import MarkdownEditor from "../markdown_editor/MarkdownEditor";
+import Schedule from "../../models/Schedule";
+import {ModifySchedule} from "../../../wailsjs/go/main/App";
 
 interface ModifyModalProps {
     isOpen: boolean;
@@ -8,6 +10,8 @@ interface ModifyModalProps {
     scheduleId: string;
     name: string;
     desc: string;
+    onClose: () => void;
+    loadCards: () => void;
 }
 
 const ModifyModal = (props: ModifyModalProps) => {
@@ -25,12 +29,19 @@ const ModifyModal = (props: ModifyModalProps) => {
             return () => clearTimeout(timer);
         }
     }, [props.isOpen]);
+
     const handleOk = () => {
+        const userInputSchedule: Schedule = {id: props.scheduleId, name: nameInputValue, desc: descInputValue};
+        ModifySchedule(userInputSchedule).then(() => {
+            props.loadCards();
+        });
         props.setIsOpen(false);
+        props.onClose();
     }
 
     const handleCancel = () => {
         props.setIsOpen(false);
+        props.onClose();
     }
 
     return <Modal

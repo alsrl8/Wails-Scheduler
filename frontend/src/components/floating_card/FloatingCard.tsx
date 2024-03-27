@@ -13,13 +13,13 @@ interface FloatingCardProps {
     cardId: string;
     setIsColliding: (value: boolean) => void;
     cardPositions: Map<string, { x: number, y: number }>;
+    draggable: boolean;
 }
 
 const FloatingCard = forwardRef<HTMLDivElement, FloatingCardProps>((props, ref) => {
     const internalRef = useRef<HTMLDivElement>(null);
     const [isDragging, setIsDragging] = useState(false);
     const [position, setPosition] = useState({x: 0, y: 0})
-    const [visible, setVisible] = useState(true);
 
     useImperativeHandle(ref, () => internalRef.current!);
 
@@ -44,16 +44,17 @@ const FloatingCard = forwardRef<HTMLDivElement, FloatingCardProps>((props, ref) 
 
     return (
         <>
-            <Draggable disabled={!visible}
-                       nodeRef={internalRef}
-                       onDrag={(e, data) => {
-                           props.onDrag(e, data);
-                           setPosition({x: data.x, y: data.y})
-                       }}
-                       bounds={props.bounds}
-                       onStart={handleDragStart}
-                       onStop={handleDragStop}
-                       position={getStoredPosition()}
+            <Draggable
+                disabled={!props.draggable}
+                nodeRef={internalRef}
+                onDrag={(e, data) => {
+                    props.onDrag(e, data);
+                    setPosition({x: data.x, y: data.y})
+                }}
+                bounds={props.bounds}
+                onStart={handleDragStart}
+                onStop={handleDragStop}
+                position={getStoredPosition()}
             >
                 <div className="draggable-container" ref={internalRef}>
                     <div className={`floating-card ${isDragging ? 'no-animation' : ''}`}>

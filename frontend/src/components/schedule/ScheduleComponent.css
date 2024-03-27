@@ -11,7 +11,7 @@
 
 
 .card {
-    cursor: pointer;
+    cursor: default;
     overflow: hidden;
     position: relative;
 }
